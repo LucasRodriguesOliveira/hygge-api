@@ -1,0 +1,17 @@
+  Project Hygge {
+    database_type: 'PostgreSQL'
+    note: '''
+      # Hygge Marketplace
+    '''
+  }
+
+Table Product {
+  id          uuid              [pk, not null]
+  name        varchar   (50)    [not null]
+  description varchar   (150)   [not null]
+  price       decimal   (10, 2) [not null]
+  active      boolean           [not null, default: true]
+  createdAt   timestamp         [not null, default: 'CURRENT_TIMESTAMP']
+  updatedAt   timestamp         [not null, default: 'CURRENT_TIMESTAMP']
+  deletedAt   timestamp         [null]
+}
