@@ -2,7 +2,6 @@ import {
   IsDecimal,
   IsDefined,
   IsNotEmpty,
-  IsNumber,
   IsString,
   MaxLength,
   MinLength,
@@ -42,6 +41,5 @@ export class CreateProductDto {
     force_decimal: true,
     decimal_digits: '1,2',
   })
-  @IsNumber()
   price: number;
 }
