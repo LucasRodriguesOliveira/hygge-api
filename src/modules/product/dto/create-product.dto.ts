@@ -1,7 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsDecimal,
   IsDefined,
   IsNotEmpty,
+  IsNumber,
   IsString,
   MaxLength,
   MinLength,
@@ -10,36 +11,53 @@ import {
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty({
-    message: "O campo 'name' é obrigatório.",
+    message: "'name' is mandatory.",
   })
   @MaxLength(50, {
     message:
-      "O valor do campo 'name' é muito grande. O tamanho máximo é de $constraint1 caracteres, mas o inserido é de $value.",
+      "'name' is too long. Maximal length is $constraint1 characters, but actual is $value.",
   })
   @MinLength(3, {
     message:
-      "O valor do campo 'name' é muito pequeno. O tamanho mínimo é de $constraint1 caracteres, mas o inserido é de $value.",
+      "'name' is too short. Minimal length is $constraint1 characters, but actual is $value.",
+  })
+  @ApiProperty({
+    type: String,
+    example: 'Simple Product',
+    description: 'Name of the product',
+    required: true,
   })
   name: string;
 
   @IsString()
   @IsNotEmpty({
-    message: "O campo 'description' é obrigatório.",
+    message: "Field 'description' is mandatory.",
   })
   @MaxLength(150, {
     message:
-      "O campo 'description' possui tamanho máximo de $constraint1 caracteres.",
+      "'description' is too long. Maximal length is $constraint1 characters, but actual is $value.",
   })
   @MinLength(5, {
     message:
-      "O campo 'description' possui tamanho mínimo de $constraint1 caracteres.",
+      "'description' is too short. Minimal length is $constraint1 characters, but actual is $value.",
+  })
+  @ApiProperty({
+    type: String,
+    example: 'My simple product',
+    description: 'Description of the product',
+    required: true,
   })
   description: string;
 
-  @IsDefined()
-  @IsDecimal({
-    force_decimal: true,
-    decimal_digits: '1,2',
+  @IsDefined({
+    message: "'price' is mandatory.",
+  })
+  @IsNumber({}, { message: "'price' field mut be a number" })
+  @ApiProperty({
+    type: Number,
+    example: 10.75,
+    description: 'Price of the product',
+    required: true,
   })
   price: number;
 }

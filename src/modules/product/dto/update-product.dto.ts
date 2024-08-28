@@ -1,4 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDecimal,
   IsDefined,
   IsNotEmpty,
@@ -13,30 +15,42 @@ export class UpdateProductDto {
   @IsString()
   @IsOptional()
   @IsNotEmpty({
-    message: "O campo 'name' é obrigatório.",
+    message: "Field 'name' is mandatory.",
   })
   @MaxLength(50, {
     message:
-      "O valor do campo 'name' é muito grande. O tamanho máximo é de $constraint1 caracteres, mas o inserido é de $value.",
+      "'name' is too long. Maximal length is $constraint1 characters, but actual is $value.",
   })
   @MinLength(3, {
     message:
-      "O valor do campo 'name' é muito pequeno. O tamanho mínimo é de $constraint1 caracteres, mas o inserido é de $value.",
+      "'name' is too short. Minimal length is $constraint1 characters, but actual is $value.",
+  })
+  @ApiProperty({
+    type: String,
+    description: 'New name of the product',
+    example: 'Amazing Product',
+    required: false,
   })
   name?: string;
 
   @IsString()
   @IsOptional()
   @IsNotEmpty({
-    message: "O campo 'description' é obrigatório.",
+    message: "Field 'description' is mandatory.",
   })
   @MaxLength(150, {
     message:
-      "O campo 'description' possui tamanho máximo de $constraint1 caracteres.",
+      "'description' is too long. Maximal length is $constraint1 characters, but actual is $value.",
   })
   @MinLength(5, {
     message:
-      "O campo 'description' possui tamanho mínimo de $constraint1 caracteres.",
+      "'description' is too short. Minimal length is $constraint1 characters, but actual is $value.",
+  })
+  @ApiProperty({
+    type: String,
+    description: 'New description of the product',
+    example: 'A more descriptive information about the product',
+    required: false,
   })
   description?: string;
 
@@ -47,5 +61,22 @@ export class UpdateProductDto {
     decimal_digits: '1,2',
   })
   @IsNumber()
+  @ApiProperty({
+    type: String,
+    description: 'The Price of the product',
+    example: 10.75,
+    required: false,
+  })
   price?: number;
+
+  @IsDefined()
+  @IsOptional()
+  @IsBoolean()
+  @ApiProperty({
+    type: String,
+    description: 'Defines if an item is active or not.',
+    example: true,
+    required: false,
+  })
+  active?: boolean;
 }

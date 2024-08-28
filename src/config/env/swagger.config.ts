@@ -1,4 +1,4 @@
-import { SwaggerConfig } from '../types/swagger.config';
+import { SwaggerConfig } from '../types/swagger.interface';
 
 export const SWAGGER_TOKEN = Symbol('swagger');
 

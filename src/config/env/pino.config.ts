@@ -1,4 +1,4 @@
-import { PinoConfig } from '../types/pino.config';
+import { PinoConfig } from '../types/pino.interface';
 
 export const pinoConfig = (): { pino: PinoConfig } => {
   const { NODE_ENV = 'development' } = process.env;

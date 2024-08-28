@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { SWAGGER_TOKEN } from '../env/swagger.config';
-import { SwaggerConfig } from '../types/swagger.config';
+import { SwaggerConfig } from '../types/swagger.interface';
 
 export function createSwaggerDocument(
   app: INestApplication,

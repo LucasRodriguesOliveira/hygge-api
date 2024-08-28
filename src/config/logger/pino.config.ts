@@ -1,6 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModuleAsyncParams } from 'nestjs-pino';
-import { PinoConfig } from '../types/pino.config';
+import { PinoConfig } from '../types/pino.interface';
 
 export const loggerConfig = (): LoggerModuleAsyncParams => ({
   imports: [ConfigModule],
