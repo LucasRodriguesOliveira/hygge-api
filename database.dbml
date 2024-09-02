@@ -10,8 +10,22 @@ Table Product {
   name        varchar   (50)    [not null]
   description varchar   (150)   [not null]
   price       decimal   (10, 2) [not null]
+  userId      uuid              [not null]
   active      boolean           [not null, default: true]
   createdAt   timestamp         [not null, default: 'CURRENT_TIMESTAMP']
   updatedAt   timestamp         [not null, default: 'CURRENT_TIMESTAMP']
   deletedAt   timestamp         [null]
 }
+
+Table User {
+  id        uuid          [pk, not null]
+  name      varchar (50)  [not null]
+  email     varchar (100) [not null, unique]
+  password  varchar (150) [not null]
+  active    boolean       [not null, default: true]
+  createdAt timestamp     [not null, default: 'CURRENT_TIMESTAMP']
+  updatedAt timestamp     [not null, default: 'CURRENT_TIMESTAMP']
+  deletedAt timestamp     [null]
+}
+
+Ref "Product_User_fk": Product.userId > User.id

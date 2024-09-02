@@ -8,6 +8,8 @@ import { loggerConfig } from './config/logger/pino.config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { throttlerConfig } from './config/throttler/throttler.config';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { APP_GUARD } from '@nestjs/core';
     ThrottlerModule.forRoot(throttlerConfig),
     LoggerModule.forRootAsync(loggerConfig()),
     PrismaModule,
+    AuthModule,
+    UserModule,
     ProductModule,
   ],
   controllers: [],

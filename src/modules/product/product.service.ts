@@ -113,4 +113,14 @@ export class ProductService extends PaginatedService {
 
     return product.deletedAt !== null;
   }
+
+  public async listByUser(userId: string): Promise<ListProductResponse[]> {
+    const products = await this.prisma.product.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    return plainToInstance(ListProductResponse, products);
+  }
 }
