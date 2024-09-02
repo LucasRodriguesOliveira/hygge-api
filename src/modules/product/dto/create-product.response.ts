@@ -59,4 +59,12 @@ export class CreateProductResponse implements Product {
 
   @Exclude()
   updatedAt: Date;
+
+  @ApiProperty({
+    type: String,
+    description: "User's id owner of the product.",
+    example: randomUUID(),
+  })
+  @Expose()
+  userId: string;
 }

@@ -26,6 +26,8 @@ export class CreateProductDto {
     example: 'Simple Product',
     description: 'Name of the product',
     required: true,
+    minLength: 3,
+    maxLength: 50,
   })
   name: string;
 
@@ -46,6 +48,8 @@ export class CreateProductDto {
     example: 'My simple product',
     description: 'Description of the product',
     required: true,
+    minLength: 5,
+    maxLength: 150,
   })
   description: string;
 

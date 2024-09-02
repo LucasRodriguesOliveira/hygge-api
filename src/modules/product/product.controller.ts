@@ -11,10 +11,12 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -32,6 +34,7 @@ import { QueryProductDto } from './dto/query-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateProductResponse } from './dto/update-product.response';
 import { ProductService } from './product.service';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Controller('product')
 @ApiTags('Catalog')
@@ -89,6 +92,7 @@ export class ProductController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({
     type: CreateProductResponse,
     description: 'The product created',
@@ -96,6 +100,7 @@ export class ProductController {
   @ApiBadRequestResponse({
     description: 'It happens when the fields are not properly set.',
   })
+  @ApiBearerAuth()
   public async create(
     @Body(ValidationPipe) createProductDto: CreateProductDto,
   ): Promise<CreateProductResponse> {
