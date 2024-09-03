@@ -18,13 +18,20 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PrismaClientKnownError } from '../../prisma/prismaErrors.enum';
+import { GetUser } from '../../shared/decorator/get-user.decorator';
 import { PaginatedResult } from '../../shared/types/paginated-result.interface';
+import { RequestUser } from '../../shared/types/request-user';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { CheckPolicies } from '../casl/product/decorator/check-policies.decorator';
+import { ProductPoliciesGuard } from '../casl/product/guard/product-policies.guard';
+import { UpdatePolicy } from '../casl/product/policies/update.policy';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateProductResponse } from './dto/create-product.response';
 import { DeleteProductResponse } from './dto/delete-product.response';
@@ -34,7 +41,7 @@ import { QueryProductDto } from './dto/query-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateProductResponse } from './dto/update-product.response';
 import { ProductService } from './product.service';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { DeletePolicy } from '../casl/product/policies/delete.policy';
 
 @Controller('product')
 @ApiTags('Catalog')
@@ -100,19 +107,29 @@ export class ProductController {
   @ApiBadRequestResponse({
     description: 'It happens when the fields are not properly set.',
   })
+  @ApiForbiddenResponse({
+    description: 'Must be logged in to create a product',
+  })
   @ApiBearerAuth()
   public async create(
     @Body(ValidationPipe) createProductDto: CreateProductDto,
+    @GetUser() user: RequestUser,
   ): Promise<CreateProductResponse> {
-    return this.productService.create(createProductDto);
+    return this.productService.create(user.id, createProductDto);
   }
 
   @Put(':productId')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, ProductPoliciesGuard)
   @ApiOkResponse({
     type: UpdateProductResponse,
     description: 'Updated product.',
   })
+  @ApiForbiddenResponse({
+    description: 'Only the owner can update the product',
+  })
+  @ApiBearerAuth()
+  @CheckPolicies(UpdatePolicy)
   public async update(
     @Param('productId', ParseUUIDPipe) productId: string,
     @Body(ValidationPipe) updateProductDto: UpdateProductDto,
@@ -122,9 +139,15 @@ export class ProductController {
 
   @Delete(':productId')
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard, ProductPoliciesGuard)
   @ApiOkResponse({
     type: DeleteProductResponse,
   })
+  @ApiForbiddenResponse({
+    description: 'Only the owner can delete the product',
+  })
+  @ApiBearerAuth()
+  @CheckPolicies(DeletePolicy)
   public async delete(
     @Param('productId', ParseUUIDPipe) productId: string,
   ): Promise<DeleteProductResponse> {

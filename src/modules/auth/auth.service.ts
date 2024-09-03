@@ -12,8 +12,10 @@ import { PrismaClientKnownError } from '../../prisma/prismaErrors.enum';
 import { FindUserResponse } from '../user/dto/find-user.response';
 import { UserService } from '../user/user.service';
 import { SignInDto } from './dto/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 import { SignInResponse } from './dto/sign-in.response';
 import { JwtPayload } from './types/jwt-payload.interface';
+import { CreateUserResponse } from '../user/dto/create-user.response';
 
 @Injectable()
 export class AuthService {
@@ -43,7 +45,7 @@ export class AuthService {
       password,
     );
 
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       throw new UnauthorizedException();
     }
 
@@ -59,5 +61,9 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async signUp(signUpDto: SignUpDto): Promise<CreateUserResponse> {
+    return this.userService.create(signUpDto);
   }
 }
