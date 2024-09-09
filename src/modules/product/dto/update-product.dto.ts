@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
-  IsDecimal,
   IsDefined,
   IsNotEmpty,
   IsNumber,
@@ -54,18 +53,16 @@ export class UpdateProductDto {
   })
   description?: string;
 
-  @IsDefined()
-  @IsOptional()
-  @IsDecimal({
-    force_decimal: true,
-    decimal_digits: '1,2',
+  @IsDefined({
+    message: "'price' is mandatory.",
   })
-  @IsNumber()
+  @IsOptional()
+  @IsNumber({}, { message: "'price' field mut be a number" })
   @ApiProperty({
-    type: String,
-    description: 'The Price of the product',
+    type: Number,
     example: 10.75,
-    required: false,
+    description: 'Price of the product',
+    required: true,
   })
   price?: number;
 

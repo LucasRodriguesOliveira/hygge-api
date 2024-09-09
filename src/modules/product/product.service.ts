@@ -11,6 +11,7 @@ import { UpdateProductResponse } from './dto/update-product.response';
 import { SortOption } from './types/sort-option.enum';
 import { PaginatedService } from '../../shared/service/paginated.service';
 import { PaginatedResult } from '../../shared/types/paginated-result.interface';
+import { ListOwnedProducts } from './dto/list-owned-products.response';
 
 @Injectable()
 export class ProductService extends PaginatedService {
@@ -78,10 +79,14 @@ export class ProductService extends PaginatedService {
   }
 
   public async create(
+    userId: string,
     createProductDto: CreateProductDto,
   ): Promise<CreateProductResponse> {
     const product = await this.prisma.product.create({
-      data: createProductDto,
+      data: {
+        ...createProductDto,
+        userId,
+      },
     });
 
     return plainToInstance(CreateProductResponse, product);
@@ -114,13 +119,13 @@ export class ProductService extends PaginatedService {
     return product.deletedAt !== null;
   }
 
-  public async listByUser(userId: string): Promise<ListProductResponse[]> {
+  public async listByUser(userId: string): Promise<ListOwnedProducts[]> {
     const products = await this.prisma.product.findMany({
       where: {
         userId,
       },
     });
 
-    return plainToInstance(ListProductResponse, products);
+    return plainToInstance(ListOwnedProducts, products);
   }
 }
