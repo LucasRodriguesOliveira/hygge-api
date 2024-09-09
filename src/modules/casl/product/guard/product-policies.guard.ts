@@ -8,13 +8,13 @@ import { Reflector } from '@nestjs/core';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { plainToInstance } from 'class-transformer';
 import { Request } from 'express';
-import { PrismaService } from '../../../../prisma/prisma.service';
-import { PrismaClientKnownError } from '../../../../prisma/prismaErrors.enum';
 import { FindProductResponse } from '../../../product/dto/find-product.response';
 import { CaslAbilityFactory } from '../../casl-ability.factory';
 import { CHECK_POLICIES_TOKEN } from '../decorator/check-policies.decorator';
 import { PolicyHandler } from '../types/policy.handler';
 import { ProductAbility } from '../types/product.ability';
+import { PrismaService } from '../../../../infrastructure/prisma/prisma.service';
+import { PrismaClientKnownError } from '../../../../infrastructure/prisma/prismaErrors.enum';
 
 @Injectable()
 export class ProductPoliciesGuard implements CanActivate {

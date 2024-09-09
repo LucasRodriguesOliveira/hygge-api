@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Product } from '@prisma/client';
-import { PrismaService } from '../../../src/prisma/prisma.service';
+import { PrismaService } from '../../../src/infrastructure/prisma/prisma.service';
 
 export const listProduct = async (
   app: INestApplication,

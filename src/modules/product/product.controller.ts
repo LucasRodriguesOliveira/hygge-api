@@ -24,14 +24,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { PrismaClientKnownError } from '../../prisma/prismaErrors.enum';
-import { GetUser } from '../../shared/decorator/get-user.decorator';
+import { PrismaClientKnownError } from '../../infrastructure/prisma/prismaErrors.enum';
 import { PaginatedResult } from '../../shared/types/paginated-result.interface';
-import { RequestUser } from '../../shared/types/request-user';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { CheckPolicies } from '../casl/product/decorator/check-policies.decorator';
-import { ProductPoliciesGuard } from '../casl/product/guard/product-policies.guard';
-import { UpdatePolicy } from '../casl/product/policies/update.policy';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateProductResponse } from './dto/create-product.response';
 import { DeleteProductResponse } from './dto/delete-product.response';
@@ -41,6 +36,11 @@ import { QueryProductDto } from './dto/query-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateProductResponse } from './dto/update-product.response';
 import { ProductService } from './product.service';
+import { ProductPoliciesGuard } from '../casl/product/guard/product-policies.guard';
+import { GetUser } from '../../shared/decorator/get-user.decorator';
+import { RequestUser } from '../../shared/types/request-user';
+import { CheckPolicies } from '../casl/product/decorator/check-policies.decorator';
+import { UpdatePolicy } from '../casl/product/policies/update.policy';
 import { DeletePolicy } from '../casl/product/policies/delete.policy';
 
 @Controller('product')

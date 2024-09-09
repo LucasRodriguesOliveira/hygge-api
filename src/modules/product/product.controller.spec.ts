@@ -3,7 +3,7 @@ import { Product } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { plainToInstance } from 'class-transformer';
 import { randomBytes, randomUUID } from 'crypto';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../infrastructure/prisma/prisma.service';
 import { PaginatedResult } from '../../shared/types/paginated-result.interface';
 import { SortOrder } from '../../shared/types/sort-order.enum';
 import { CreateProductDto } from './dto/create-product.dto';

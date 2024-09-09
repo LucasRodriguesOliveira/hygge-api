@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '../../infrastructure/prisma/prisma.service';
+import { PaginatedService } from '../../shared/service/paginated.service';
+import { PaginatedResult } from '../../shared/types/paginated-result.interface';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateProductResponse } from './dto/create-product.response';
 import { FindProductResponse } from './dto/find-product.response';
@@ -9,8 +11,6 @@ import { QueryProductDto } from './dto/query-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { UpdateProductResponse } from './dto/update-product.response';
 import { SortOption } from './types/sort-option.enum';
-import { PaginatedService } from '../../shared/service/paginated.service';
-import { PaginatedResult } from '../../shared/types/paginated-result.interface';
 import { ListOwnedProducts } from './dto/list-owned-products.response';
 
 @Injectable()

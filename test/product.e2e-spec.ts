@@ -5,22 +5,22 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Product } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import * as request from 'supertest';
-import { envConfig } from '../src/config/env/env.config';
+import { envConfig } from '../src/infrastructure/config/env/env.config';
+import { PrismaModule } from '../src/infrastructure/prisma/prisma.module';
 import { CreateProductDto } from '../src/modules/product/dto/create-product.dto';
 import { CreateProductResponse } from '../src/modules/product/dto/create-product.response';
+import { DeleteProductResponse } from '../src/modules/product/dto/delete-product.response';
 import { ListProductResponse } from '../src/modules/product/dto/list-product.response';
 import { QueryProductDto } from '../src/modules/product/dto/query-product.dto';
 import { UpdateProductDto } from '../src/modules/product/dto/update-product.dto';
 import { UpdateProductResponse } from '../src/modules/product/dto/update-product.response';
 import { ProductModule } from '../src/modules/product/product.module';
 import { SortOption } from '../src/modules/product/types/sort-option.enum';
-import { PrismaModule } from '../src/prisma/prisma.module';
 import { PaginatedResult } from '../src/shared/types/paginated-result.interface';
 import { SortOrder } from '../src/shared/types/sort-order.enum';
 import { createProduct } from './helper/product/create-product';
 import { listProduct } from './helper/product/list-product';
 import { removeProduct } from './helper/product/remove-product';
-import { DeleteProductResponse } from '../src/modules/product/dto/delete-product.response';
 
 describe('ProductController (e2e)', () => {
   let app: INestApplication;

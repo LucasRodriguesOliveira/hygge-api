@@ -1,0 +1,3 @@
+export const CREATE_PRODUCT_USE_CASE_TOKEN = Symbol(
+  '_CREATE_PRODUCT_USE_CASE_TOKEN_',
+);

@@ -8,7 +8,7 @@ import { User } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { plainToInstance } from 'class-transformer';
 import { Request } from 'express';
-import { PrismaClientKnownError } from '../../prisma/prismaErrors.enum';
+import { PrismaClientKnownError } from '../../infrastructure/prisma/prismaErrors.enum';
 import { FindUserResponse } from '../user/dto/find-user.response';
 import { UserService } from '../user/user.service';
 import { SignInDto } from './dto/sign-in.dto';
